@@ -14,9 +14,9 @@ groq_api_key = os.getenv("GROQ_API_KEY")
 # Initialize Groq API client with API key
 client = Groq(api_key=groq_api_key)
 
-# Updated models (Check Groq documentation for latest models)
-llava_model = 'llava-13b'  # Updated LLaVA model
-llama31_model = 'llama-3.1-70b-versatile'  # Keeping Llama 3.1
+# Updated models
+vision_model = 'llama-3.2-11b-vision-preview'  # Replacing LLaVA with Llama 3.2 Vision
+llama31_model = 'llama-3.1-70b-versatile'  # Keeping Llama 3.1 for text generation
 
 # Function to resize image if too large
 def resize_image(image, max_size=(800, 800)):
@@ -30,7 +30,7 @@ def encode_image(image_path):
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode('utf-8')
 
-# Function to generate image description using LLaVA
+# Function to generate image description using Llama 3.2 Vision
 def image_to_text(client, model, base64_image, prompt):
     chat_completion = client.chat.completions.create(
         messages=[
@@ -71,7 +71,7 @@ def short_story_generation(client, image_description):
     return chat_completion.choices[0].message.content
 
 # Streamlit app title
-st.title("LLaVA & Llama 3.1: Image Description and Story Generator")
+st.title("Llama 3.2 Vision & Llama 3.1: Image Description and Story Generator")
 
 # Image upload section
 uploaded_image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
@@ -98,9 +98,9 @@ if uploaded_image:
     base64_image = encode_image(image_path)
 
     # Generate image description
-    st.write("Generating image description using LLaVA...")
+    st.write("Generating image description using Llama 3.2 Vision...")
     description_prompt = "Describe this image in detail, including the appearance of the dog(s) and any notable actions or behaviors."
-    image_description = image_to_text(client, llava_model, base64_image, description_prompt)
+    image_description = image_to_text(client, vision_model, base64_image, description_prompt)
 
     st.write("### Image Description")
     st.write(image_description)
