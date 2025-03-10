@@ -13,8 +13,10 @@ groq_api_key = os.getenv("GROQ_API_KEY")
 
 # Initialize Groq API client with API key
 client = Groq(api_key=groq_api_key)
-llava_model = 'llava-v1.5-7b-4096-preview'
-llama31_model = 'llama-3.1-70b-versatile'
+
+# Updated models (Check Groq documentation for latest models)
+llava_model = 'llava-13b'  # Updated LLaVA model
+llama31_model = 'llama-3.1-70b-versatile'  # Keeping Llama 3.1
 
 # Function to resize image if too large
 def resize_image(image, max_size=(800, 800)):
