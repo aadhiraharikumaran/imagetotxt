@@ -16,7 +16,7 @@ client = Groq(api_key=groq_api_key)
 
 # Updated model names
 vision_model = 'llama-3.2-11b-vision-preview'
-llama31_model = 'llama-3.1-70b-versatile'
+llama33_model = 'llama-3.3-70b-versatile'  # Updated model
 
 # Function to resize image if too large
 def resize_image(image, max_size=(800, 800)):
@@ -52,7 +52,7 @@ def image_to_text(client, model, base64_image, prompt):
 
     return chat_completion.choices[0].message.content
 
-# Function to generate short story using Llama 3.1
+# Function to generate short story using Llama 3.3
 def short_story_generation(client, image_description):
     chat_completion = client.chat.completions.create(
         messages=[
@@ -65,13 +65,13 @@ def short_story_generation(client, image_description):
                 "content": image_description,
             }
         ],
-        model=llama31_model
+        model=llama33_model  # Updated model reference
     )
 
     return chat_completion.choices[0].message.content
 
 # Streamlit app title
-st.title("LLaVA & Llama 3.1: Image Description and Story Generator")
+st.title("LLaVA & Llama 3.3: Image Description and Story Generator")
 
 # Image upload section
 uploaded_image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
@@ -108,7 +108,7 @@ if uploaded_image:
     st.write(image_description)
 
     # Generate short story based on image description
-    st.write("Generating short story using Llama 3.1...")
+    st.write("Generating short story using Llama 3.3...")
     short_story = short_story_generation(client, image_description)
 
     st.write("### Generated Story")
