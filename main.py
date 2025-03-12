@@ -15,8 +15,8 @@ groq_api_key = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=groq_api_key)
 
 # Updated model names
-vision_model = 'llama-3.2-11b-vision-preview'
-llama33_model = 'llama-3.3-70b-versatile'  # Updated model
+vision_model = 'llama-3.2-11b-vision-preview'  # Vision model
+llama33_model = 'llama-3.3-70b-instruct'  # Correct replacement model
 
 # Function to resize image if too large
 def resize_image(image, max_size=(800, 800)):
@@ -65,7 +65,7 @@ def short_story_generation(client, image_description):
                 "content": image_description,
             }
         ],
-        model=llama33_model  # Updated model reference
+        model=llama33_model  # Correct model replacement
     )
 
     return chat_completion.choices[0].message.content
